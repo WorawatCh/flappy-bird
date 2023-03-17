@@ -46,6 +46,7 @@ function loop(){
 
   // draw bird
   ctx.value.drawImage(bird, birdX.value, birdY.value);
+  bird.src = '/src/assets/flappy_dunk.png';
 
   // draw pipe
   ctx.value.fillStyle ='#333'
@@ -155,7 +156,6 @@ function collisionCheck(){
 }
 
 onMounted(() => {
-    bird.src = '/src/assets/flappy_dunk.png'
     pipeY.value = gameCanvas.value.height -200
     if(!isFromStart.value){
       loop()
