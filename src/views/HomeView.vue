@@ -3,8 +3,8 @@ import { ref,onMounted, onUpdated  } from 'vue';
 const score = ref(0)
 const highScore = ref(0)
 const canvas = document.getElementById('gameCanvas');
-const bird = new Image();
-bird.src = '/src/assets/flappy_dunk.png'
+var bird = new Image();
+
 
 const gameCanvas = ref(null)
 const endMenu = ref(null)
@@ -155,6 +155,7 @@ function collisionCheck(){
 }
 
 onMounted(() => {
+    bird.src = '/src/assets/flappy_dunk.png'
     pipeY.value = gameCanvas.value.height -200
     if(!isFromStart.value){
       loop()
