@@ -1,9 +1,11 @@
 <script setup>
 import { ref,onMounted, onUpdated  } from 'vue';
+import imageUrl from '@/assets/flappy_dunk.png'
 const score = ref(0)
 const highScore = ref(0)
 const canvas = document.getElementById('gameCanvas');
-var bird = new Image();
+var bird = document.createElement("img");
+const imgLoaded = ref(false)
 
 
 const gameCanvas = ref(null)
@@ -14,7 +16,7 @@ const ctx = ref(null)
 // bird constant
 const BIRD_SPEED = -5
 const BIRD_WIDTH = 40
-const BIRD_HEIGHT = 30
+const BIRD_HEIGHT = 25
 const PIPE_WIDTH = 50
 const PIPE_GAP = 125
 
@@ -33,6 +35,19 @@ const scored = ref(false)
 const isShowEndMenu = ref(false)
 // const isHideEndMenu = ref(true)
 
+onMounted(() => {
+     bird.onload = async function() {
+       imgLoaded.value = true
+    }
+    console.log('imgLoaded',imgLoaded.value)
+    bird.id = 'bird'
+    bird.src = '/src/assets/bird.png'; 
+   
+    pipeY.value = gameCanvas.value.height -200
+    if(!isFromStart.value){
+      loop()
+    }
+  });
 
 document.body.onkeyup = function(e) {
     if (e.code == 'Space') {
@@ -45,7 +60,7 @@ function loop(){
   ctx.value.clearRect(0, 0,  gameCanvas.value.width,  gameCanvas.value.height);
 
   // draw bird
-  ctx.value.drawImage(bird, birdX.value, birdY.value);
+  ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
     
   
 
@@ -156,19 +171,14 @@ function collisionCheck(){
 
 }
 
-onMounted(() => {
-    bird.src = '/src/assets/flappy_dunk.png'; 
-    pipeY.value = gameCanvas.value.height -200
-    if(!isFromStart.value){
-      loop()
-    }
-  });
+
 </script>
 
 <template>
   <div ref="startMenu" class="start-menu text-center" v-if="isFromStart" :class="!isFromStart ? 'fadeOut':''">
     <h1>Flappy Bird</h1>
     <img src="../assets/bird.png" class="logo">
+   
     <br>
     <button class="start-btn mt-2" @click="resetGame()">Start</button>
   </div>
@@ -180,6 +190,7 @@ onMounted(() => {
   </div>
    <div ref="gameContainer" class="game-container"  :class="isShowEndMenu ? ' backdrop-blur' :''">
     <canvas ref="gameCanvas" id="gameCanvas" class="game-canvas" width="400" height="600"></canvas>
+    <img src="../assets/flappy_dunk.png" style="display: none;">
     <div class="score-display text-center">{{ score }}</div>
   </div>
 </template>
