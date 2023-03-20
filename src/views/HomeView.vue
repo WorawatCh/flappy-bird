@@ -4,7 +4,7 @@ import imageUrl from '@/assets/flappy_dunk.png'
 const score = ref(0)
 const highScore = ref(0)
 const canvas = document.getElementById('gameCanvas');
-var bird = document.createElement("img");
+
 const imgLoaded = ref(false)
 
 
@@ -36,12 +36,8 @@ const isShowEndMenu = ref(false)
 // const isHideEndMenu = ref(true)
 
 onMounted(() => {
-     bird.onload = function() {
-       
-      imgLoaded.value = true
-      }
     ctx.value = gameCanvas.value.getContext("2d");
-    console.log('imgLoaded',imgLoaded.value + ' new')
+    console.log('imgLoaded',imgLoaded.value + ' new 2')
     
     pipeY.value = gameCanvas.value.height -200
     if(!isFromStart.value){
@@ -59,13 +55,16 @@ function loop(){
   ctx.value.clearRect(0, 0,  gameCanvas.value.width,  gameCanvas.value.height);
 
   // // draw bird
+  var bird = new Image();
+  bird.onload = function() {
+    console.log('loading')
+    // ctx.value.clearRect(0, 0,  gameCanvas.value.width,  gameCanvas.value.height);
+  }
   ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
-  bird.id = 'bird'
   bird.src = '/src/assets/bird.png';
-    
+  bird.id = 'bird'
   
-
-  // draw pipe
+ 
   ctx.value.fillStyle ='#333'
   ctx.value.fillRect(pipeX.value, -100, PIPE_WIDTH, pipeY.value)
   ctx.value.fillRect(pipeX.value, (pipeY.value + PIPE_GAP), PIPE_WIDTH,( gameCanvas.value.height - pipeY.value))
@@ -178,7 +177,7 @@ function collisionCheck(){
 <template>
   <div ref="startMenu" class="start-menu text-center" v-if="isFromStart" :class="!isFromStart ? 'fadeOut':''">
     <h1>Flappy Bird</h1>
-    <img src="../assets/bird.png" class="logo">
+    <img src="/src/assets/bird.png" class="logo">
    
     <br>
     <button class="start-btn mt-2" @click="resetGame()">Start</button>
@@ -191,7 +190,7 @@ function collisionCheck(){
   </div>
    <div ref="gameContainer" class="game-container"  :class="isShowEndMenu ? ' backdrop-blur' :''">
     <canvas ref="gameCanvas" id="gameCanvas" class="game-canvas" width="400" height="600"></canvas>
-    <img src="../assets/flappy_dunk.png" style="display: none;">
+    <img src="/src/assets/flappy_dunk.png" style="display: none;">
     <div class="score-display text-center">{{ score }}</div>
   </div>
 </template>
