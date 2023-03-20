@@ -37,8 +37,7 @@ const isShowEndMenu = ref(false)
 
 onMounted(() => {
     ctx.value = gameCanvas.value.getContext("2d");
-    console.log('imgLoaded',imgLoaded.value + ' new 2')
-    
+    console.log('imgLoaded',imgLoaded.value + ' new 3')
     pipeY.value = gameCanvas.value.height -200
     if(!isFromStart.value){
       loop()
@@ -57,9 +56,9 @@ function loop(){
   // // draw bird
   var bird = new Image();
   bird.onload = function() {
+    ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
   }
   bird.src = '/src/assets/bird.png';
-  ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
   bird.id = 'bird'
   
  
