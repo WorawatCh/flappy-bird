@@ -36,13 +36,13 @@ const isShowEndMenu = ref(false)
 // const isHideEndMenu = ref(true)
 
 onMounted(() => {
-     bird.onload = async function() {
-       imgLoaded.value = true
-    }
-    console.log('imgLoaded',imgLoaded.value)
-    bird.id = 'bird'
-    bird.src = '/src/assets/bird.png'; 
-   
+     bird.onload = function() {
+       
+      imgLoaded.value = true
+      }
+    ctx.value = gameCanvas.value.getContext("2d");
+    console.log('imgLoaded',imgLoaded.value + ' new')
+    
     pipeY.value = gameCanvas.value.height -200
     if(!isFromStart.value){
       loop()
@@ -56,11 +56,12 @@ document.body.onkeyup = function(e) {
 }
 
 function loop(){
-  ctx.value = gameCanvas.value.getContext("2d");
   ctx.value.clearRect(0, 0,  gameCanvas.value.width,  gameCanvas.value.height);
 
-  // draw bird
+  // // draw bird
   ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
+  bird.id = 'bird'
+  bird.src = '/src/assets/bird.png';
     
   
 
