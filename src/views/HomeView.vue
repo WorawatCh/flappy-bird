@@ -16,7 +16,7 @@ const ctx = ref(null)
 // bird constant
 const BIRD_SPEED = -5
 const BIRD_WIDTH = 40
-const BIRD_HEIGHT = 25
+const BIRD_HEIGHT = 30
 const PIPE_WIDTH = 50
 const PIPE_GAP = 125
 
@@ -65,9 +65,9 @@ function loop(){
 
   // // draw bird
   bird.id = 'bird'
-  bird.src = '/src/assets/bird.png';
+  bird.src = '/src/assets/flappy_dunk.png';
   // bird.onload = function() {
-    ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
+    ctx.value.drawImage(bird, birdX.value, birdY.value);
     // }
   
  
@@ -183,7 +183,7 @@ function collisionCheck(){
 <template>
   <div ref="startMenu" class="start-menu text-center" v-if="isFromStart" :class="!isFromStart ? 'fadeOut':''">
     <h1>Flappy Bird</h1>
-    <img src="/src/assets/flappy_dunk.png" class="logo">
+    <img src="/src/assets/bird.png" class="logo">
    
     <br>
     <button class="start-btn mt-2" @click="resetGame()">Start</button>
@@ -196,7 +196,6 @@ function collisionCheck(){
   </div>
    <div ref="gameContainer" class="game-container"  :class="isShowEndMenu ? ' backdrop-blur' :''">
     <canvas ref="gameCanvas" id="gameCanvas" class="game-canvas" width="400" height="600"></canvas>
-    <img src="/src/assets/flappy_dunk.png" style="display: none;">
     <div class="score-display text-center">{{ score }}</div>
   </div>
 </template>
