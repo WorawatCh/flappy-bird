@@ -57,11 +57,9 @@ function loop(){
   // // draw bird
   var bird = new Image();
   bird.onload = function() {
-    console.log('loading')
-    // ctx.value.clearRect(0, 0,  gameCanvas.value.width,  gameCanvas.value.height);
   }
-  ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
   bird.src = '/src/assets/bird.png';
+  ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
   bird.id = 'bird'
   
  
