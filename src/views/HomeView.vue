@@ -4,7 +4,7 @@ import imageUrl from '@/assets/flappy_dunk.png'
 const score = ref(0)
 const highScore = ref(0)
 const canvas = document.getElementById('gameCanvas');
-
+const  bird = new Image();
 const imgLoaded = ref(false)
 
 
@@ -36,13 +36,23 @@ const isShowEndMenu = ref(false)
 // const isHideEndMenu = ref(true)
 
 onMounted(() => {
-    ctx.value = gameCanvas.value.getContext("2d");
-    console.log('imgLoaded',imgLoaded.value + ' new 3')
+    ctx.value = gameCanvas.value.getContext("2d",{ willReadFrequently: true });
     pipeY.value = gameCanvas.value.height -200
-    if(!isFromStart.value){
-      loop()
-    }
-  });
+
+    // var bird = new Image();
+    // bird.onload = async function() {
+    //   // if(bird.complete){
+    //     await ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
+    //   // }
+    //   // var imgData = ctx.value.getImageData(birdX.value, birdY.value,50,50);
+    //   // ctx.value.putImageData(imgData, birdX.value, birdY.value);
+    // }
+    // bird.src = '/src/assets/bird.png';
+    // bird.id = 'bird'
+      if(!isFromStart.value){
+        loop()
+      }
+    });
 
 document.body.onkeyup = function(e) {
     if (e.code == 'Space') {
@@ -54,12 +64,11 @@ function loop(){
   ctx.value.clearRect(0, 0,  gameCanvas.value.width,  gameCanvas.value.height);
 
   // // draw bird
-  var bird = new Image();
-  bird.onload = function() {
-    ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
-  }
-  bird.src = '/src/assets/bird.png';
   bird.id = 'bird'
+  bird.src = '/src/assets/bird.png';
+  // bird.onload = function() {
+    ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
+    // }
   
  
   ctx.value.fillStyle ='#333'
@@ -174,7 +183,7 @@ function collisionCheck(){
 <template>
   <div ref="startMenu" class="start-menu text-center" v-if="isFromStart" :class="!isFromStart ? 'fadeOut':''">
     <h1>Flappy Bird</h1>
-    <img src="/src/assets/bird.png" class="logo">
+    <img src="/src/assets/flappy_dunk.png" class="logo">
    
     <br>
     <button class="start-btn mt-2" @click="resetGame()">Start</button>
