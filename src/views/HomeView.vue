@@ -4,7 +4,8 @@ import imageUrl from '@/assets/flappy_dunk.png'
 const score = ref(0)
 const highScore = ref(0)
 const canvas = document.getElementById('gameCanvas');
-const  bird = new Image();
+const bird = new Image();
+// bird.src = '/src/assets/flappy_dunk.png';
 const imgLoaded = ref(false)
 
 
@@ -36,22 +37,22 @@ const isShowEndMenu = ref(false)
 // const isHideEndMenu = ref(true)
 
 onMounted(() => {
-    ctx.value = gameCanvas.value.getContext("2d",{ willReadFrequently: true });
+    ctx.value = gameCanvas.value.getContext("2d");
     pipeY.value = gameCanvas.value.height -200
 
-    // var bird = new Image();
-    // bird.onload = async function() {
-    //   // if(bird.complete){
-    //     await ctx.value.drawImage(bird, birdX.value, birdY.value,50,50);
-    //   // }
-    //   // var imgData = ctx.value.getImageData(birdX.value, birdY.value,50,50);
-    //   // ctx.value.putImageData(imgData, birdX.value, birdY.value);
+    // const bird = new Image();
+    // bird.onload = function() {
+      // if(bird.complete){
+      //   ctx.value.clearRect(0, 0,  gameCanvas.value.width,  gameCanvas.value.height);
+      //   ctx.value.drawImage(bird, birdX.value, birdY.value);
+      // }
+      // bird.src = '/src/assets/bird.png';
     // }
-    // bird.src = '/src/assets/bird.png';
+    
     // bird.id = 'bird'
-      if(!isFromStart.value){
+      // if(!isFromStart.value){
         loop()
-      }
+      // }
     });
 
 document.body.onkeyup = function(e) {
@@ -67,8 +68,10 @@ function loop(){
   bird.id = 'bird'
   bird.src = '/src/assets/flappy_dunk.png';
   // bird.onload = function() {
-    ctx.value.drawImage(bird, birdX.value, birdY.value);
-    // }
+    if(bird.complete){
+      ctx.value.drawImage(bird, birdX.value, birdY.value);
+    }
+  //   }
   
  
   ctx.value.fillStyle ='#333'
@@ -181,13 +184,13 @@ function collisionCheck(){
 </script>
 
 <template>
-  <div ref="startMenu" class="start-menu text-center" v-if="isFromStart" :class="!isFromStart ? 'fadeOut':''">
+  <!-- <div ref="startMenu" class="start-menu text-center" v-if="isFromStart" :class="!isFromStart ? 'fadeOut':''">
     <h1>Flappy Bird</h1>
     <img src="/src/assets/bird.png" class="logo">
    
     <br>
     <button class="start-btn mt-2" @click="resetGame()">Start</button>
-  </div>
+  </div> -->
   <div ref="endMenu" class="end-menu text-center" :class="isShowEndMenu ? 'end-menu-active' :'end-menu-inactive fadeOut'">
     <h1>Game Over!</h1>
     <p> Score: <span class="end-score">{{ score }}</span></p>
